@@ -1,3 +1,5 @@
+USE sakila;
+
 ALTER TABLE actor
 ADD COLUMN description BLOB;
 

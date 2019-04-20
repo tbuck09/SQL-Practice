@@ -1,3 +1,4 @@
+USE sakila;
 SELECT * FROM actor WHERE first_name LIKE "JOE";
 
 SELECT * FROM actor WHERE last_name LIKE "%GEN%";
