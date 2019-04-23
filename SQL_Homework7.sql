@@ -184,4 +184,5 @@ JOIN
 ON category.category_id = film_amount.category_id
 GROUP BY name
 ORDER BY revenue DESC
+LIMIT 5
 ;
