@@ -101,3 +101,87 @@ JOIN
 	) AS film_id_counts
 ON film.film_id = film_id_counts.film_id
 ORDER BY film_times_rented DESC
+;
+
+-- 7f. Write a query to display how much business, in dollars, each store brought in.
+SELECT
+	store.store_id,
+    SUM(amount) AS store_revenue
+FROM store
+JOIN
+	(SELECT
+		rental_amounts.amount,
+		staff.staff_id,
+		staff.store_id
+	FROM staff
+	JOIN
+		(SELECT
+			amount,
+			payment.rental_id,
+			rental.staff_id
+		FROM payment
+		JOIN rental
+		ON payment.rental_id = rental.rental_id
+		) AS rental_amounts
+	ON staff.staff_id = rental_amounts.staff_id
+	) AS staff_sales
+ON store.store_id = staff_sales.store_id
+GROUP BY store.store_id
+;
+
+-- 7g. Write a query to display for each store its store ID, city, and country.
+SELECT
+	store_id,
+    city,
+    country
+FROM country
+JOIN
+	(SELECT
+		store_id,
+		city,
+		country_id
+	FROM city
+	JOIN
+		(SELECT
+			city_id,
+			store_id
+		FROM store
+		JOIN address
+		ON store.address_id = address.address_id
+		) AS city_store_id
+	ON city.city_id = city_store_id.city_id
+	) AS city_country_id
+ON country.country_id = city_country_id.country_id
+;
+
+-- 7h. List the top five genres in gross revenue in descending order. (Hint: you may need to use the following tables: category, film_category, inventory, payment, and rental.)
+SELECT
+	name,
+	SUM(amount) AS revenue
+FROM category
+JOIN
+	(SELECT
+		amount,
+		category_id
+	FROM film_category
+	JOIN
+		(SELECT
+			amount,
+			film_id
+		FROM inventory
+		JOIN
+			(SELECT
+				amount,
+				inventory_id
+			FROM payment
+			JOIN rental
+			ON payment.rental_id = rental.rental_id
+			) AS rental_amount
+		ON inventory.inventory_id = rental_amount.inventory_id
+		) AS inventory_amount
+	ON film_category.film_id = inventory_amount.film_id
+	) AS film_amount
+ON category.category_id = film_amount.category_id
+GROUP BY name
+ORDER BY revenue DESC
+;
