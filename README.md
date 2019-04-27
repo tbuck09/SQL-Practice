@@ -1,2 +1,3 @@
 # Tyler-Bootcamp-Homework-Module-9
-This is the repository for Tyler Buck's homework in Module 9 of the DU Data Analytics Bootcamp.
+
+The sections of the homework assignment have been split into separate .sql files in the hopes that the results are easier to look through. (i.e. 1a and 1b are found within SQL_Homework1.sql)
