@@ -62,7 +62,7 @@ ON customer.address_id = canada_address.address_id
 
 -- 7d. Sales have been lagging among young families, and you wish to target all family movies for a promotion. Identify all movies categorized as family films.
 SELECT
-	title
+	title AS "title_of_family_film"
 FROM film
 JOIN
 	(SELECT

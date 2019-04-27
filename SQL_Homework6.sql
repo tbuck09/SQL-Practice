@@ -15,8 +15,7 @@ ON address.address_id = staff.address_id
 SELECT
 	first_name,
     last_name,
-    SUM(amount) AS "total_sales",
-    payment_date
+    SUM(amount) AS "total_august_sales"
 FROM staff
 JOIN payment
 ON staff.staff_id = payment.staff_id
